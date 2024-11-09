@@ -21,8 +21,12 @@ function createData(
     };
 }
 
-function capitalizeFirstLetter(val) {
-    return String(val).charAt(0).toUpperCase() + String(val).slice(1);
+function capitalizeFirstLetter(string) {
+    return String(string).charAt(0).toUpperCase() + String(string).slice(1);
+}
+
+function formatPercentage(number) {
+    return Number(number/100).toLocaleString(undefined,{style: 'percent', minimumFractionDigits:2});
 }
 
 export function PlayerStats(props) {
@@ -52,17 +56,22 @@ export function PlayerStats(props) {
                     </TableRow>
                 </TableHead>
                 <TableBody>
-                    {gameModeRowDetails.map((row) => (
-                        <TableRow
-                            key={capitalizeFirstLetter(row.groupName)}
-                            sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
-                        >
-                            <TableCell>{capitalizeFirstLetter(row.groupName)}</TableCell>
-                            <TableCell align="right">{row.ratio}</TableCell>
-                            <TableCell align="right">{row.winRate}</TableCell>
-                            <TableCell align="right">{row.kills}</TableCell>
-                        </TableRow>
-                    ))}
+                    {gameModeRowDetails.map((row) => {
+                        const gameMode = capitalizeFirstLetter(row.groupName);
+                        const winPercentage = formatPercentage(row.winRate);
+
+                        return (
+                            <TableRow
+                                key={gameMode}
+                                sx={{'&:last-child td, &:last-child th': {border: 0}}}
+                            >
+                                <TableCell>{gameMode}</TableCell>
+                                <TableCell align="right">{row.ratio}</TableCell>
+                                <TableCell align="right">{winPercentage}</TableCell>
+                                <TableCell align="right">{row.kills}</TableCell>
+                            </TableRow>
+                        )
+                    })}
                 </TableBody>
             </Table>
         </TableContainer>
