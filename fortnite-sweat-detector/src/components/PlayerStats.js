@@ -26,21 +26,23 @@ function capitalizeFirstLetter(string) {
 }
 
 function formatPercentage(number) {
-    return Number(number/100).toLocaleString(undefined,{style: 'percent', minimumFractionDigits:2});
+    return Number(number).toLocaleString(undefined,{style: 'percent', minimumFractionDigits:2});
 }
-
 export function PlayerStats(props) {
     const {
-        stats,
+        playerRecord,
     } = props;
-    console.log(stats);
 
-    const gameModeRowDetails = Object.keys(stats).map(groupName => {
+    if (!playerRecord){
+        return;
+    }
+
+    const gameModeRowDetails = Object.keys(playerRecord.global_stats).map(groupName => {
         const {
             kd,
             winrate,
             kills,
-        } = stats[groupName];
+        } = playerRecord.global_stats[groupName];
         return createData(groupName, kd, winrate, kills);
     });
 

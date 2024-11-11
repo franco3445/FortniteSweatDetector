@@ -51,7 +51,11 @@ const StyledInputBase = styled(InputBase)(({ theme }) => ({
     },
 }));
 
-export function SearchBar() {
+export function SearchBar(props) {
+    const {
+        handleSearch,
+        handleSearchChange,
+    } = props
     return (
         <Box sx={{ flexGrow: 1 }}>
             <AppBar position="static">
@@ -71,8 +75,14 @@ export function SearchBar() {
                         <StyledInputBase
                             placeholder="Search…"
                             inputProps={{ 'aria-label': 'search' }}
+                            onChange={handleSearchChange}
                         />
                     </Search>
+                        <IconButton
+                            onClick={handleSearch}
+                        >
+                            Are They Sweaty?
+                        </IconButton>
                 </Toolbar>
             </AppBar>
         </Box>
