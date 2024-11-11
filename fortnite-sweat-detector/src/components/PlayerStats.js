@@ -34,7 +34,31 @@ export function PlayerStats(props) {
     } = props;
 
     if (!playerRecord){
-        return;
+        return(
+            <TableContainer>
+                <Table sx={{ minWidth: 650 }} size="small" aria-label="a dense table">
+                    <TableHead>
+                        <TableRow>
+                            <TableCell>No Record Provided</TableCell>
+                        </TableRow>
+                    </TableHead>
+                </Table>
+            </TableContainer>
+        );
+    }
+
+    if (!playerRecord.global_stats){
+        return(
+            <TableContainer>
+                <Table sx={{ minWidth: 650 }} size="small" aria-label="a dense table">
+                    <TableHead>
+                        <TableRow>
+                            <TableCell>{playerRecord.error}</TableCell>
+                        </TableRow>
+                    </TableHead>
+                </Table>
+            </TableContainer>
+        )
     }
 
     const gameModeRowDetails = Object.keys(playerRecord.global_stats).map(groupName => {

@@ -1,6 +1,5 @@
 import React from "react";
-import { Card, CardHeader } from '@mui/material';
-
+import {CardHeader} from '@mui/material';
 
 export function PlayerBanner(props) {
     const {
@@ -11,6 +10,14 @@ export function PlayerBanner(props) {
         return (
             <CardHeader
                 title={'Loading...'}
+            />
+        );
+    }
+
+    if (!playerRecord.accountLevelHistory){
+        return (
+            <CardHeader
+                title={playerRecord.error}
             />
         );
     }
