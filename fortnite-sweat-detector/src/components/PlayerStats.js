@@ -28,6 +28,7 @@ function capitalizeFirstLetter(string) {
 function formatPercentage(number) {
     return Number(number).toLocaleString(undefined,{style: 'percent', minimumFractionDigits:2});
 }
+
 export function PlayerStats(props) {
     const {
         playerRecord,
@@ -70,6 +71,28 @@ export function PlayerStats(props) {
         return createData(groupName, kd, winrate, kills);
     });
 
+    const generateRatioRowColor = function (ratio) {
+        let color = 'green';
+        if (ratio > 4) {
+            color = 'red';
+        } else if (ratio > 2) {
+            color = 'yellow';
+        }
+
+        return color
+    };
+
+    const generateWinRateRowColor = function (percentage) {
+        let color = 'green';
+        if (percentage > .20) {
+            color = 'red';
+        } else if (percentage > .10) {
+            color = 'yellow';
+        }
+
+        return color
+    }
+
     return (
         <TableContainer component={Paper}>
             <Table sx={{ minWidth: 650 }} size="small" aria-label="a dense table">
@@ -85,6 +108,8 @@ export function PlayerStats(props) {
                     {gameModeRowDetails.map((row) => {
                         const gameMode = capitalizeFirstLetter(row.groupName);
                         const winPercentage = formatPercentage(row.winRate);
+                        const ratioRowColor = generateRatioRowColor(row.ratio);
+                        const winRateRowColor = generateWinRateRowColor(row.winRate);
 
                         return (
                             <TableRow
@@ -92,8 +117,8 @@ export function PlayerStats(props) {
                                 sx={{'&:last-child td, &:last-child th': {border: 0}}}
                             >
                                 <TableCell>{gameMode}</TableCell>
-                                <TableCell align="right">{row.ratio}</TableCell>
-                                <TableCell align="right">{winPercentage}</TableCell>
+                                <TableCell align="right" style={{backgroundColor: ratioRowColor}}>{row.ratio}</TableCell>
+                                <TableCell align="right" style={{backgroundColor: winRateRowColor}}>{winPercentage}</TableCell>
                                 <TableCell align="right">{row.kills}</TableCell>
                             </TableRow>
                         )
